@@ -1,6 +1,6 @@
 {
   "name": "kl-svelte-select",
-  "version": "5.6.2",
+  "version": "5.6.3",
   "repository": "https://github.com/Kirill-Lekhov/svelte-select.git",
   "description": "A <Select> component for Svelte apps",
   "scripts": {
