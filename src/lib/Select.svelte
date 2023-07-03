@@ -802,7 +802,7 @@
             </button>
         {/if}
 
-        {#if showChevron}
+        {#if showChevron && !showClear}
             <div class="icon chevron" aria-hidden="true">
                 <slot name="chevron-icon" {listOpen}>
                     <ChevronIcon />
