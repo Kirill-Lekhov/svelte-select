@@ -27,8 +27,12 @@
 npm install svelte-select
 ```
 
-## Upgrading to v5
-See [migration guide](/MIGRATION_GUIDE.md) if upgrading from v4 to v5.
+## Svelte 5
+I'm not currently using Svelte 5 in my day job or personal projects so might be a while before I tackle porting / upgrading to Svelte 5. Looking forward to it though, just need to find the time!
+
+
+## Upgrading Svelte Select
+See [migration guide](/MIGRATION_GUIDE.md) if upgrading
 
 
 ## Rollup and low/no-build setups
@@ -72,6 +76,7 @@ List position and floating is powered by `floating-ui`, see their [package-entry
 | required               | `boolean` | `false`         | If `Select` is within a `<form>` will restrict form submission |
 | multiFullItemClearable | `boolean` | `false`         | When `multiple` selected items will clear on click             |
 | closeListOnChange      | `boolean` | `true`          | After `on:change` list will close                              |
+| clearFilterTextOnBlur  | `boolean` | `true`          | If `false`, `filterText` value is preserved on:blur            |
 
 
 ## Named slots

@@ -1,5 +1,27 @@
 # svelte-select changelog
 
+## 5.8.3
+
+* #651 Fixed: unknown extension .svelte (thanks to @happysalada)
+
+## 5.8.2
+
+* #658 Fixed ARIA + vite-plugin-svelte warnings (thanks to @stephenlrandall)
+
+## 5.8.0
+
+* #626 added clearFilterTextOnBlur prop (thanks to @mBoegvald)
+* #644 Fixed input focus issue (thanks to @524c)
+
+## 5.7.0
+
+* #617 added custom group title border variable support (thanks to @lipe-dev)
+* #610 resolved ARIA warnings by defining a role on interactive divs (thanks to @josdejong)
+
+## 5.6.2
+
+* #525 set clear button to `type="button"` (thanks to @CanRau)
+  
 ## 5.6.1
 
 * #525 set clear button to `type="button"` (thanks to @CanRau)

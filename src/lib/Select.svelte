@@ -1,6 +1,6 @@
 <script>
     import { beforeUpdate, createEventDispatcher, onDestroy, onMount } from 'svelte';
-    import { offset, flip, shift } from '@floating-ui/dom';
+    import { offset, flip, shift } from 'svelte-floating-ui/dom';
     import { createFloatingActions } from 'svelte-floating-ui';
 
     const dispatch = createEventDispatcher();
@@ -42,6 +42,7 @@
     export let filterSelectedItems = true;
     export let required = false;
     export let closeListOnChange = true;
+    export let clearFilterTextOnBlur = true;
 
     export let createGroupHeaderItem = (groupValue, item) => {
         return {
@@ -454,7 +455,7 @@
     function handleFocus(e) {
         if (focused && input === document?.activeElement) return;
         if (e) dispatch('focus', e);
-        input.focus();
+        input?.focus();
         focused = true;
     }
 
@@ -465,12 +466,13 @@
             closeList();
             focused = false;
             activeValue = undefined;
-            input.blur();
+            input?.blur();
         }
     }
 
     function handleClick() {
         if (disabled) return;
+        if (filterText.length > 0) return listOpen = true;
         listOpen = !listOpen;
     }
 
@@ -504,7 +506,9 @@
     }
 
     function closeList() {
-        filterText = '';
+        if (clearFilterTextOnBlur) {
+            filterText = '';
+        }
         listOpen = false;
     }
 
@@ -676,9 +680,9 @@
     class:error={hasError}
     style={containerStyles}
     on:pointerup|preventDefault={handleClick}
-    on:mousedown|preventDefault
     bind:this={container}
-    use:floatingRef>
+    use:floatingRef
+    role="none">
     {#if listOpen}
         <div
             use:floatingContent
@@ -686,7 +690,9 @@
             class="svelte-select-list"
             class:prefloat
             on:scroll={handleListScroll}
-            on:pointerup|preventDefault|stopPropagation>
+            on:pointerup|preventDefault|stopPropagation
+            on:mousedown|preventDefault|stopPropagation
+			role="none">
             {#if $$slots['list-prepend']}<slot name="list-prepend" />{/if}
             {#if $$slots.list}<slot name="list" {filteredItems} />
             {:else if filteredItems.length > 0}
@@ -697,7 +703,8 @@
                         on:click|stopPropagation={() => handleItemClick({ item, i })}
                         on:keydown|preventDefault|stopPropagation
                         class="list-item"
-                        tabindex="-1">
+                        tabindex="-1"
+                        role="none">
                         <div
                             use:activeScroll={{ scroll: isItemActive(item, value, itemId), listDom }}
                             use:hoverScroll={{ scroll: scrollToHoverItem === i, listDom }}
@@ -745,7 +752,8 @@
                         class:active={activeValue === i}
                         class:disabled
                         on:click|preventDefault={() => (multiFullItemClearable ? handleMultiItemClear(i) : {})}
-                        on:keydown|preventDefault|stopPropagation>
+                        on:keydown|preventDefault|stopPropagation
+                        role="none">
                         <span class="multi-item-text">
                             <slot name="selection" selection={item} index={i}>
                                 {item[label]}
@@ -841,6 +849,9 @@
         --groupTitleFontWeight: var(--group-title-font-weight);
         --groupTitlePadding: var(--group-title-padding);
         --groupTitleTextTransform: var(--group-title-text-transform);
+        --groupTitleBorderColor: var(--group-title-border-color);
+        --groupTitleBorderWidth: var(--group-title-border-width);
+        --groupTitleBorderStyle: var(--group-title-border-style);
         --indicatorColor: var(--chevron-color);
         --indicatorHeight: var(--chevron-height);
         --indicatorWidth: var(--chevron-width);
@@ -1142,6 +1153,9 @@
         overflow-x: hidden;
         white-space: nowrap;
         text-transform: var(--group-title-text-transform, uppercase);
+        border-width: var(--group-title-border-width, medium);
+        border-style: var(--group-title-border-style, none);
+        border-color: var(--group-title-border-color, color);
     }
 
     .empty {
